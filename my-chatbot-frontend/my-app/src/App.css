@@ -1,0 +1,166 @@
+/* Main app container with the background image */
+.App {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-image: url('../public/luxury-background.jpg'); /* Path to your background image */
+  background-size: cover; /* Cover the entire screen */
+  background-position: center; /* Center the background */
+  background-repeat: no-repeat; /* Don't repeat the background image */
+  margin: 0;
+  overflow: hidden; /* Hide any overflow caused by large background */
+}
+
+/* Chat window */
+.chat-window {
+  width: 420px;
+  max-width: 100%;
+  background-color: rgba(255, 255, 255, 0.85); /* Semi-transparent white to allow background to show through */
+  border-radius: 15px;
+  box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.1);
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  height: 500px;
+  overflow: hidden;
+  border: 1px solid #ddd;
+}
+
+/* Chat messages list */
+.messages-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  flex-grow: 1;
+  overflow-y: auto;
+}
+
+/* Individual message styling */
+.message {
+  margin-bottom: 18px;
+  max-width: 80%;
+  padding: 12px 18px;
+  border-radius: 22px;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+/* User's message style */
+.message.user {
+  background-color: #0077ff; /* Deep blue for luxury */
+  color: white;
+  align-self: flex-end;
+  border-radius: 22px 22px 0 22px;
+}
+
+/* Bot's message style */
+.message.bot {
+  background-color: #f0f0f0; /* Light gray for bot messages */
+  color: #333;
+  align-self: flex-start;
+  border-radius: 22px 22px 22px 0;
+}
+
+/* Input area styling */
+.input-area {
+  display: flex;
+  margin-top: 18px;
+}
+
+/* Input field */
+.input-area input {
+  flex-grow: 1;
+  padding: 12px 20px;
+  font-size: 14px;
+  border-radius: 25px;
+  border: 1px solid #ccc;
+  outline: none;
+  background-color: #f9f9f9;
+  transition: border-color 0.3s;
+}
+
+/* Input field focus styling */
+.input-area input:focus {
+  border-color: #0077ff; /* Blue border for focus */
+  background-color: #ffffff; /* White background on focus */
+}
+
+/* Send button styling */
+.input-area button {
+  background-color: #0077ff; /* Matching deep blue */
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  margin-left: 15px;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+/* Button hover effect */
+.input-area button:hover {
+  background-color: #0056b3;
+  transform: translateY(-2px); /* Slight lift effect */
+}
+
+/* File upload area styling */
+.file-upload-area {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* File input styling */
+.file-upload-area input[type="file"] {
+  padding: 8px;
+  font-size: 14px;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+}
+
+/* Upload button styling */
+.file-upload-area button {
+  margin-top: 15px;
+  background-color: #5a7ef1; /* Soft blue */
+  color: white;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+/* Upload button hover effect */
+.file-upload-area button:hover {
+  background-color: #4a6fd0;
+  transform: translateY(-2px); /* Slight lift effect */
+}
+
+/* Scrollbar styling */
+.messages-list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.messages-list::-webkit-scrollbar-thumb {
+  background-color: #0077ff;
+  border-radius: 5px;
+}
+
+.messages-list::-webkit-scrollbar-track {
+  background-color: #eaeaea;
+}
+
+/* Add subtle animations for message transitions */
+.message {
+  opacity: 0;
+  animation: fadeIn 0.5s forwards;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
