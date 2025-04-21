@@ -7,6 +7,10 @@ function App() {
   const [role, setRole] = useState('Frontend Developer');
   const messagesEndRef = useRef(null);
 
+  const addMessage = (text, sender) => {
+    setMessages((prev) => [...prev, { text, sender }]);
+  };
+
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
@@ -36,22 +40,22 @@ function App() {
 
   const handleWrapUp = async () => {
     try {
+      const history = messages
+        .map((msg) => `${msg.sender === 'user' ? 'Candidate' : 'Interviewer'}: ${msg.text}`)
+        .join('\n');
+
       const response = await fetch('http://localhost:3000/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: '__WRAP_UP__', role }),
+        body: JSON.stringify({ message: '__WRAP_UP__', role, history }),
       });
-  
+
       const data = await response.json();
       addMessage(data.response || 'No response from server.', 'bot');
     } catch (error) {
       console.error('Error:', error);
       addMessage('Error: Could not finish the interview.', 'bot');
     }
-  };
-
-  const addMessage = (text, sender) => {
-    setMessages((prev) => [...prev, { text, sender }]);
   };
 
   return (
@@ -82,7 +86,9 @@ function App() {
             placeholder="Your response..."
           />
           <button type="submit">Send</button>
-          <button onClick={handleWrapUp} className="wrap-up-button">Finish Interview</button>
+          <button type="button" onClick={handleWrapUp} className="wrap-up-button">
+            Finish Interview
+          </button>
         </form>
       </div>
     </div>
