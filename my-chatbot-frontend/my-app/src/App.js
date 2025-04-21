@@ -4,6 +4,7 @@ import './App.css';
 function App() {
   const [messages, setMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState('');
+  const [feedbackText, setFeedbackText] = useState(''); // ✅ เพิ่ม state สำหรับ feedback
   const [role, setRole] = useState('Frontend Developer');
   const messagesEndRef = useRef(null);
 
@@ -18,7 +19,8 @@ function App() {
     addMessage(inputMessage, 'user');
 
     try {
-      const response = await fetch('http://localhost:3000/api/chat', {
+      const response = await fetch('http://localhost:4001/api/chat', {
+        // ✅ เปลี่ยนเป็น AI backend
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message: inputMessage, role }),
@@ -36,17 +38,46 @@ function App() {
 
   const handleWrapUp = async () => {
     try {
-      const response = await fetch('http://localhost:3000/api/chat', {
+      const response = await fetch('http://localhost:4001/api/chat', {
+        // ✅ ใช้ AI backend
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message: '__WRAP_UP__', role }),
       });
-  
+
       const data = await response.json();
       addMessage(data.response || 'No response from server.', 'bot');
     } catch (error) {
       console.error('Error:', error);
       addMessage('Error: Could not finish the interview.', 'bot');
+    }
+  };
+
+  const handleFeedback = async () => {
+    if (!feedbackText.trim()) {
+      alert('Please enter your feedback.');
+      return;
+    }
+
+    try {
+      const response = await fetch('http://localhost:3000/api/feedback', {
+        // ✅ ใช้ Feedback backend (MongoDB)
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ feedback: feedbackText, role }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        alert('✅ Feedback submitted successfully!');
+        setFeedbackText('');
+      } else {
+        alert(`❌ Failed: ${data.error}`);
+      }
+    } catch (error) {
+      console.error('Error sending feedback:', error);
+      alert('❌ Error: Could not send feedback.');
     }
   };
 
@@ -82,8 +113,19 @@ function App() {
             placeholder="Your response..."
           />
           <button type="submit">Send</button>
-          <button onClick={handleWrapUp} className="wrap-up-button">Finish Interview</button>
+          <button type="button" onClick={handleWrapUp} className="wrap-up-button">Finish Interview</button>
         </form>
+      </div>
+
+      <div className='feedback'>
+        <h3>Feedback</h3>
+        <input
+          type="text"
+          value={feedbackText}
+          onChange={(e) => setFeedbackText(e.target.value)}
+          placeholder="Your feedback..."
+        />
+        <button onClick={handleFeedback} className="wrap-up-button">Submit Feedback</button>
       </div>
     </div>
   );
