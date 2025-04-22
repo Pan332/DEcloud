@@ -1,6 +1,7 @@
 const express = require("express");
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 const dotenv = require("dotenv");
+const cors = require('cors');
 dotenv.config();
 
 const app = express();
@@ -9,6 +10,7 @@ const gemini_api_key = process.env.API_KEY;
 const googleAI = new GoogleGenerativeAI(gemini_api_key);
 
 app.use(express.json());
+app.use(cors());
 
 const geminiModel = googleAI.getGenerativeModel({
   model: "gemini-1.5-flash",
@@ -19,13 +21,17 @@ const geminiModel = googleAI.getGenerativeModel({
 });
 
 app.post("/api/chat", async (req, res) => {
-  const { message, role = "Software Engineer" } = req.body;
+  const { message, role = "Software Engineer", history = "" } = req.body;
 
   let prompt;
 
   if (message === '__WRAP_UP__') {
     prompt = `
 You are a professional interviewer conducting a mock interview for the role of ${role}.
+
+Here is the conversation transcript:
+ ${history}
+ 
 Wrap up the interview with:
 1. A brief summary of the candidate's performance.
 2. Key strengths and areas for improvement.

@@ -6,7 +6,7 @@ function App() {
   const [inputMessage, setInputMessage] = useState('');
   const [role, setRole] = useState('Frontend Developer');
   const messagesEndRef = useRef(null);
-
+  
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
@@ -36,10 +36,14 @@ function App() {
 
   const handleWrapUp = async () => {
     try {
+      const history = messages
+         .map((msg) => `${msg.sender === 'user' ? 'Candidate' : 'Interviewer'}: ${msg.text}`)
+         .join('\n');
+         
       const response = await fetch('http://localhost:4001/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: '__WRAP_UP__', role }),
+        body: JSON.stringify({ message: '__WRAP_UP__', role, history }),
       });
 
       const data = await response.json();
@@ -57,7 +61,7 @@ function App() {
     }
 
     try {
-      const response = await fetch('http://localhost:3000/api/feedback', {
+      const response = await fetch('http://localhost:3002/api/feedback', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ feedback: inputMessage, role }),

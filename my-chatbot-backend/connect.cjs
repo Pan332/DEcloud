@@ -45,5 +45,5 @@ app.post('/api/feedback', async (req, res) => {
   }
 });
 
-const PORT = 3000;
+const PORT = 3002;
 app.listen(PORT, () => console.log(`📝 Feedback API running on port ${PORT}`));
