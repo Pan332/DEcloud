@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const { MongoClient } = require('mongodb');
-require('dotenv').config();
+require('dotenv').config({ path: './config.env' });
 
 const app = express();
 app.use(cors());
@@ -30,7 +30,7 @@ app.post('/api/feedback', async (req, res) => {
 
   try {
     const db = client.db("feedback");
-    const collection = db.collection("entries");
+    const collection = db.collection("feedback");
 
     await collection.insertOne({
       feedback,
