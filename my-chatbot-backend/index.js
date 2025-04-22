@@ -10,12 +10,12 @@ app.use(express.json());
 const aiApiUrl = "http://localhost:4001/api/chat";
 
 app.post('/api/chat', async (req, res) => {
-  const { message, role } = req.body;
+  const { message, role, history } = req.body;
 
   if (!message) return res.status(400).json({ error: 'Message is required' });
 
   try {
-    const response = await axios.post(aiApiUrl, { message, role });
+    const response = await axios.post(aiApiUrl, { message, role, history });
     res.status(200).json(response.data);
   } catch (err) {
     console.error("AI API error:", err.response?.data || err.message);

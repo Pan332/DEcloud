@@ -7,6 +7,10 @@ function App() {
   const [role, setRole] = useState('Frontend Developer');
   const messagesEndRef = useRef(null);
 
+  const addMessage = (text, sender) => {
+    setMessages((prev) => [...prev, { text, sender }]);
+  };
+
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
@@ -37,9 +41,12 @@ function App() {
   const handleWrapUp = async () => {
     try {
       const response = await fetch('http://localhost:4001/api/chat', {
+      const history = messages
+        .map((msg) => `${msg.sender === 'user' ? 'Candidate' : 'Interviewer'}: ${msg.text}`)
+        .join('\n');
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: '__WRAP_UP__', role }),
+        body: JSON.stringify({ message: '__WRAP_UP__', role, history }),
       });
 
       const data = await response.json();
@@ -108,7 +115,10 @@ function App() {
             onChange={(e) => setInputMessage(e.target.value)}
             placeholder="Your response or feedback..."
           />
-          <button type="submit" className="submitbutton">Send</button>
+          <button type="submit">Send</button>
+          <button type="button" onClick={handleWrapUp} className="wrap-up-button">
+            Finish Interview
+          </button>
         </form>
 
         <div className="bottom-buttons">
