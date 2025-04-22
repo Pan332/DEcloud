@@ -19,17 +19,13 @@ const geminiModel = googleAI.getGenerativeModel({
 });
 
 app.post("/api/chat", async (req, res) => {
-  const { message, role = "Software Engineer", history = "" } = req.body;
+  const { message, role = "Software Engineer" } = req.body;
 
   let prompt;
 
   if (message === '__WRAP_UP__') {
     prompt = `
 You are a professional interviewer conducting a mock interview for the role of ${role}.
-
-Here is the conversation transcript:
-${history}
-
 Wrap up the interview with:
 1. A brief summary of the candidate's performance.
 2. Key strengths and areas for improvement.

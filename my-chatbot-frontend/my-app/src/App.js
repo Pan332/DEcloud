@@ -7,10 +7,6 @@ function App() {
   const [role, setRole] = useState('Frontend Developer');
   const messagesEndRef = useRef(null);
 
-  const addMessage = (text, sender) => {
-    setMessages((prev) => [...prev, { text, sender }]);
-  };
-
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
@@ -40,14 +36,10 @@ function App() {
 
   const handleWrapUp = async () => {
     try {
-      const history = messages
-        .map((msg) => `${msg.sender === 'user' ? 'Candidate' : 'Interviewer'}: ${msg.text}`)
-        .join('\n');
-
-      const response = await fetch('http://localhost:3000/api/chat', {
+      const response = await fetch('http://localhost:4001/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: '__WRAP_UP__', role, history }),
+        body: JSON.stringify({ message: '__WRAP_UP__', role }),
       });
 
       const data = await response.json();
@@ -88,7 +80,7 @@ function App() {
   const addMessage = (text, sender) => {
     setMessages((prev) => [...prev, { text, sender }]);
   };
-  
+
   return (
     <div className="App">
       <div className="chat-window">
