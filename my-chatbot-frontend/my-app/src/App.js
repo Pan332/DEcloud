@@ -84,7 +84,7 @@ function App() {
   return (
     <div className="App">
       <div className="chat-window">
-        <h2>Mock Interview Chatbot</h2>
+        <h2 className="header">Mock Interview Chatbot</h2>
         <select value={role} onChange={(e) => setRole(e.target.value)} className="role-dropdown">
           <option value="Frontend Developer">Frontend Developer</option>
           <option value="Backend Developer">Backend Developer</option>
@@ -109,16 +109,18 @@ function App() {
             placeholder="Your response or feedback..."
           />
           <button type="submit" className="submitbutton">Send</button>
-          <button type="button" onClick={handleWrapUp} className="wrap-up-button">
+        </form>
+
+        <div className="bottom-buttons">
+          <button type="button" onClick={handleFeedback} className="wrap-up-button red-button">
+            Submit Feedback
+          </button>
+          <button type="button" onClick={handleWrapUp} className="wrap-up-button red-button">
             Finish Interview
           </button>
 
-          <div className="feedback">
-            <button type="button" onClick={handleFeedback} className="wrap-up-button">
-              Submit Feedback
-            </button>
-          </div>
-        </form>
+        </div>
+
       </div>
     </div>
   );

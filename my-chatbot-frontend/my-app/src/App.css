@@ -28,6 +28,15 @@
   border: 1px solid #ccc;
 }
 
+.header {
+  margin-top: -10px; /* ขยับหัวขึ้น */
+  margin-bottom: 12px; /* ลดระยะห่างด้านล่าง */
+  font-size: 24px; /* ปรับขนาดถ้าต้องการให้ดูเด่น */
+  text-align: center; /* จัดกึ่งกลางถ้ายังไม่ได้ทำ */
+  color: #333;
+}
+
+
 .role-dropdown {
   padding: 10px 16px;
   font-size: 15px;
@@ -149,14 +158,6 @@
   transform: translateY(-2px);
 }
 
-/* Optional extra buttons (Finish Interview, Submit Feedback) */
-.bottom-buttons {
-  display: flex;
-  justify-content: space-evenly;
-  gap: 16px;
-  margin-top: 16px;
-}
-
 /* File upload section */
 .file-upload-area {
   margin-top: 20px;
@@ -199,6 +200,44 @@
 .messages-list::-webkit-scrollbar-track {
   background-color: #eaeaea;
 }
+
+/* ขยาย input field */
+.input-area input {
+  flex-grow: 1;
+  padding: 16px 20px;
+  font-size: 16px;
+  border-radius: 25px;
+  border: 1px solid #ccc;
+  background-color: #f9f9f9;
+  outline: none;
+  transition: border-color 0.3s, background-color 0.3s;
+}
+
+/* ปุ่มด้านล่าง */
+.bottom-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  gap: 16px;
+}
+
+/* ปรับปุ่มสีแดง */
+.red-button {
+  background-color: #cc0000;
+  color: white;
+  padding: 12px 22px;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.red-button:hover {
+  background-color: #a80000;
+  transform: translateY(-2px);
+}
+
+
 
 /* Animations */
 @keyframes fadeIn {
