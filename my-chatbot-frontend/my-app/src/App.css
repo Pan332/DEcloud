@@ -5,28 +5,52 @@
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background-image: url('../public/luxury-background.jpg'); /* Path to your background image */
-  background-size: cover; /* Cover the entire screen */
-  background-position: center; /* Center the background */
-  background-repeat: no-repeat; /* Don't repeat the background image */
+  background-image: url('../public/luxury-background.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   margin: 0;
-  overflow: hidden; /* Hide any overflow caused by large background */
+  overflow: hidden;
 }
 
 /* Chat window */
 .chat-window {
-  width: 420px;
+  width: 620px;
   max-width: 100%;
-  background-color: rgba(255, 255, 255, 0.85); /* Semi-transparent white to allow background to show through */
-  border-radius: 15px;
-  box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.1);
-  padding: 25px;
+  background-color: rgba(255, 255, 255, 0.92);
+  border-radius: 20px;
+  box-shadow: 0px 8px 30px rgba(0, 0, 0, 0.2);
+  padding: 30px;
   display: flex;
   flex-direction: column;
-  height: 500px;
+  height: 520px;
   overflow: hidden;
-  border: 1px solid #ddd;
+  border: 1px solid #ccc;
 }
+
+.role-dropdown {
+  padding: 10px 16px;
+  font-size: 15px;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+  background-color: #ffffffee;
+  color: #333;
+  outline: none;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.08);
+  margin-bottom: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: fit-content; /* หรือ 100% แล้วแต่ต้องการ */
+}
+
+/* Hover/Focus effect */
+.role-dropdown:hover,
+.role-dropdown:focus {
+  border-color: #0077ff;
+  box-shadow: 0 0 0 2px rgba(0, 119, 255, 0.2);
+}
+
+
 
 /* Chat messages list */
 .messages-list {
@@ -35,85 +59,113 @@
   margin: 0;
   flex-grow: 1;
   overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
 /* Individual message styling */
 .message {
-  margin-bottom: 18px;
   max-width: 80%;
-  padding: 12px 18px;
-  border-radius: 22px;
+  padding: 14px 20px;
+  border-radius: 24px;
   font-size: 15px;
   line-height: 1.6;
+  word-wrap: break-word;
+  opacity: 0;
+  animation: fadeIn 0.4s forwards;
 }
 
 /* User's message style */
 .message.user {
-  background-color: #0077ff; /* Deep blue for luxury */
+  background-color: #0077ff;
   color: white;
   align-self: flex-end;
-  border-radius: 22px 22px 0 22px;
+  border-radius: 24px 24px 4px 24px;
 }
 
 /* Bot's message style */
 .message.bot {
-  background-color: #f0f0f0; /* Light gray for bot messages */
+  background-color: #ffffff;
   color: #333;
   align-self: flex-start;
-  border-radius: 22px 22px 22px 0;
+  border-radius: 24px 24px 24px 4px;
+}
+
+/* Error message style */
+.message.error {
+  background-color: #ffeaea;
+  color: #cc0000;
+  border-left: 4px solid #cc0000;
+  align-self: center;
+  border-radius: 16px;
+  padding: 12px 18px;
+  max-width: 90%;
+  font-size: 14px;
+  box-shadow: 0 2px 6px rgba(255, 0, 0, 0.1);
 }
 
 /* Input area styling */
 .input-area {
   display: flex;
-  margin-top: 18px;
+  margin-top: 20px;
+  align-items: center;
+  gap: 12px;
 }
 
 /* Input field */
 .input-area input {
   flex-grow: 1;
-  padding: 12px 20px;
-  font-size: 14px;
+  padding: 12px 18px;
+  font-size: 15px;
   border-radius: 25px;
   border: 1px solid #ccc;
-  outline: none;
   background-color: #f9f9f9;
-  transition: border-color 0.3s;
+  outline: none;
+  transition: border-color 0.3s, background-color 0.3s;
 }
 
-/* Input field focus styling */
 .input-area input:focus {
-  border-color: #0077ff; /* Blue border for focus */
-  background-color: #ffffff; /* White background on focus */
+  border-color: #0077ff;
+  background-color: #fff;
 }
 
-/* Send button styling */
-.input-area button {
-  background-color: #0077ff; /* Matching deep blue */
+/* Button style (send, finish, feedback) */
+.input-area button,
+.button {
+  background-color: #0077ff;
   color: white;
   border: none;
-  padding: 12px 25px;
-  margin-left: 15px;
+  padding: 12px 22px;
   border-radius: 25px;
   cursor: pointer;
   transition: background-color 0.3s, transform 0.2s;
+  font-size: 14px;
 }
 
-/* Button hover effect */
-.input-area button:hover {
+.input-area button:hover,
+.button:hover {
   background-color: #0056b3;
-  transform: translateY(-2px); /* Slight lift effect */
+  transform: translateY(-2px);
 }
 
-/* File upload area styling */
+/* Optional extra buttons (Finish Interview, Submit Feedback) */
+.bottom-buttons {
+  display: flex;
+  justify-content: space-evenly;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+/* File upload section */
 .file-upload-area {
   margin-top: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 10px;
 }
 
-/* File input styling */
 .file-upload-area input[type="file"] {
   padding: 8px;
   font-size: 14px;
@@ -121,44 +173,34 @@
   border: 1px solid #ccc;
 }
 
-/* Upload button styling */
 .file-upload-area button {
-  margin-top: 15px;
-  background-color: #5a7ef1; /* Soft blue */
+  background-color: #5a7ef1;
   color: white;
-  padding: 12px 25px;
+  padding: 10px 20px;
   border: none;
   border-radius: 25px;
   cursor: pointer;
   transition: background-color 0.3s, transform 0.2s;
 }
 
-/* Upload button hover effect */
 .file-upload-area button:hover {
   background-color: #4a6fd0;
-  transform: translateY(-2px); /* Slight lift effect */
+  transform: translateY(-2px);
 }
 
-/* Scrollbar styling */
+/* Scrollbar style */
 .messages-list::-webkit-scrollbar {
   width: 8px;
 }
-
 .messages-list::-webkit-scrollbar-thumb {
   background-color: #0077ff;
   border-radius: 5px;
 }
-
 .messages-list::-webkit-scrollbar-track {
   background-color: #eaeaea;
 }
 
-/* Add subtle animations for message transitions */
-.message {
-  opacity: 0;
-  animation: fadeIn 0.5s forwards;
-}
-
+/* Animations */
 @keyframes fadeIn {
   to {
     opacity: 1;

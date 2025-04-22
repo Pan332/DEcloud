@@ -4,7 +4,6 @@ import './App.css';
 function App() {
   const [messages, setMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState('');
-  const [feedbackText, setFeedbackText] = useState(''); // ✅ เพิ่ม state สำหรับ feedback
   const [role, setRole] = useState('Frontend Developer');
   const messagesEndRef = useRef(null);
 
@@ -20,7 +19,6 @@ function App() {
 
     try {
       const response = await fetch('http://localhost:4001/api/chat', {
-        // ✅ เปลี่ยนเป็น AI backend
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message: inputMessage, role }),
@@ -39,7 +37,6 @@ function App() {
   const handleWrapUp = async () => {
     try {
       const response = await fetch('http://localhost:4001/api/chat', {
-        // ✅ ใช้ AI backend
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message: '__WRAP_UP__', role }),
@@ -54,24 +51,23 @@ function App() {
   };
 
   const handleFeedback = async () => {
-    if (!feedbackText.trim()) {
+    if (!inputMessage.trim()) {
       alert('Please enter your feedback.');
       return;
     }
 
     try {
       const response = await fetch('http://localhost:3000/api/feedback', {
-        // ✅ ใช้ Feedback backend (MongoDB)
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ feedback: feedbackText, role }),
+        body: JSON.stringify({ feedback: inputMessage, role }),
       });
 
       const data = await response.json();
 
       if (response.ok) {
         alert('✅ Feedback submitted successfully!');
-        setFeedbackText('');
+        setInputMessage('');
       } else {
         alert(`❌ Failed: ${data.error}`);
       }
@@ -89,7 +85,7 @@ function App() {
     <div className="App">
       <div className="chat-window">
         <h2>Mock Interview Chatbot</h2>
-        <select value={role} onChange={(e) => setRole(e.target.value)}>
+        <select value={role} onChange={(e) => setRole(e.target.value)} className="role-dropdown">
           <option value="Frontend Developer">Frontend Developer</option>
           <option value="Backend Developer">Backend Developer</option>
           <option value="Data Scientist">Data Scientist</option>
@@ -110,22 +106,19 @@ function App() {
             type="text"
             value={inputMessage}
             onChange={(e) => setInputMessage(e.target.value)}
-            placeholder="Your response..."
+            placeholder="Your response or feedback..."
           />
-          <button type="submit">Send</button>
-          <button type="button" onClick={handleWrapUp} className="wrap-up-button">Finish Interview</button>
-        </form>
-      </div>
+          <button type="submit" className="submitbutton">Send</button>
+          <button type="button" onClick={handleWrapUp} className="wrap-up-button">
+            Finish Interview
+          </button>
 
-      <div className='feedback'>
-        <h3>Feedback</h3>
-        <input
-          type="text"
-          value={feedbackText}
-          onChange={(e) => setFeedbackText(e.target.value)}
-          placeholder="Your feedback..."
-        />
-        <button onClick={handleFeedback} className="wrap-up-button">Submit Feedback</button>
+          <div className="feedback">
+            <button type="button" onClick={handleFeedback} className="wrap-up-button">
+              Submit Feedback
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   );
