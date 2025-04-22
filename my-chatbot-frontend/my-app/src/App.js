@@ -22,7 +22,7 @@ function App() {
     addMessage(inputMessage, 'user');
 
     try {
-      const response = await fetch('http://localhost:3000/api/chat', {
+      const response = await fetch('http://localhost:4001/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message: inputMessage, role }),
@@ -58,11 +58,42 @@ function App() {
     }
   };
 
+  const handleFeedback = async () => {
+    if (!inputMessage.trim()) {
+      alert('Please enter your feedback.');
+      return;
+    }
+
+    try {
+      const response = await fetch('http://localhost:3000/api/feedback', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ feedback: inputMessage, role }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        alert('✅ Feedback submitted successfully!');
+        setInputMessage('');
+      } else {
+        alert(`❌ Failed: ${data.error}`);
+      }
+    } catch (error) {
+      console.error('Error sending feedback:', error);
+      alert('❌ Error: Could not send feedback.');
+    }
+  };
+
+  const addMessage = (text, sender) => {
+    setMessages((prev) => [...prev, { text, sender }]);
+  };
+  
   return (
     <div className="App">
       <div className="chat-window">
-        <h2>Mock Interview Chatbot</h2>
-        <select value={role} onChange={(e) => setRole(e.target.value)}>
+        <h2 className="header">Mock Interview Chatbot</h2>
+        <select value={role} onChange={(e) => setRole(e.target.value)} className="role-dropdown">
           <option value="Frontend Developer">Frontend Developer</option>
           <option value="Backend Developer">Backend Developer</option>
           <option value="Data Scientist">Data Scientist</option>
@@ -83,13 +114,21 @@ function App() {
             type="text"
             value={inputMessage}
             onChange={(e) => setInputMessage(e.target.value)}
-            placeholder="Your response..."
+            placeholder="Your response or feedback..."
           />
-          <button type="submit">Send</button>
-          <button type="button" onClick={handleWrapUp} className="wrap-up-button">
+          <button type="submit" className="submitbutton">Send</button>
+        </form>
+
+        <div className="bottom-buttons">
+          <button type="button" onClick={handleFeedback} className="wrap-up-button red-button">
+            Submit Feedback
+          </button>
+          <button type="button" onClick={handleWrapUp} className="wrap-up-button red-button">
             Finish Interview
           </button>
-        </form>
+
+        </div>
+
       </div>
     </div>
   );
