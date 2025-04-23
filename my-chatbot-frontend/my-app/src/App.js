@@ -56,31 +56,30 @@ function App() {
 
   const handleFeedback = async () => {
     if (!inputMessage.trim()) {
-      alert('Please enter your feedback.');
+      addMessage('⚠️ Please enter your feedback.🙏🙏🤌🤌', 'bot');
       return;
     }
-
+  
     try {
       const response = await fetch('http://localhost:3002/api/feedback', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ feedback: inputMessage, role }),
       });
-
+  
       const data = await response.json();
-
+  
       if (response.ok) {
-        alert('✅ Feedback submitted successfully!');
+        addMessage('✅ Feedback submitted successfully!🙇‍♂️🙇‍♂️🙇‍♂️', 'bot');
         setInputMessage('');
       } else {
-        alert(`❌ Failed: ${data.error}`);
+        addMessage(`❌ Failed: ${data.error} 😭😭😭`, 'bot');
       }
     } catch (error) {
       console.error('Error sending feedback:', error);
-      alert('❌ Error: Could not send feedback.');
+      addMessage('❌ Error: Could not send feedback.😭😭😭😭😭😭😭😭😭😭', 'bot');
     }
   };
-
   const addMessage = (text, sender) => {
     setMessages((prev) => [...prev, { text, sender }]);
   };
