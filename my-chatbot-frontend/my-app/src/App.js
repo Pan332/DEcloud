@@ -6,10 +6,14 @@ function App() {
   const [inputMessage, setInputMessage] = useState('');
   const [role, setRole] = useState('Frontend Developer');
   const messagesEndRef = useRef(null);
-  
+
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
+
+  const addMessage = (text, sender, type = '') => {
+    setMessages((prev) => [...prev, { text, sender, type }]);
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -28,7 +32,7 @@ function App() {
       addMessage(data.response || 'No response from server.', 'bot');
     } catch (error) {
       console.error('Error:', error);
-      addMessage('Error: Unable to communicate with the server.', 'bot');
+      addMessage('Error: Unable to communicate with the server.', 'bot', 'error');
     }
 
     setInputMessage('');
@@ -37,9 +41,9 @@ function App() {
   const handleWrapUp = async () => {
     try {
       const history = messages
-         .map((msg) => `${msg.sender === 'user' ? 'Candidate' : 'Interviewer'}: ${msg.text}`)
-         .join('\n');
-         
+        .map((msg) => `${msg.sender === 'user' ? 'Candidate' : 'Interviewer'}: ${msg.text}`)
+        .join('\n');
+
       const response = await fetch('http://localhost:4001/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -50,44 +54,42 @@ function App() {
       addMessage(data.response || 'No response from server.', 'bot');
     } catch (error) {
       console.error('Error:', error);
-      addMessage('Error: Could not finish the interview.', 'bot');
+      addMessage('Error: Could not finish the interview.', 'bot', 'error');
     }
   };
 
   const handleFeedback = async () => {
     if (!inputMessage.trim()) {
-      addMessage('⚠️ Please enter your feedback.🙏🙏🤌🤌', 'bot');
+      addMessage('⚠️ Please enter your feedback.', 'bot', 'error');
       return;
     }
-  
+
     try {
       const response = await fetch('http://localhost:3002/api/feedback', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ feedback: inputMessage, role }),
       });
-  
+
       const data = await response.json();
-  
+
       if (response.ok) {
-        addMessage('✅ Feedback submitted successfully!🙇‍♂️🙇‍♂️🙇‍♂️', 'bot');
+        addMessage('✅ Feedback submitted successfully!', 'bot', 'success');
         setInputMessage('');
       } else {
-        addMessage(`❌ Failed: ${data.error} 😭😭😭`, 'bot');
+        addMessage(`❌ Failed: ${data.error}`, 'bot', 'error');
       }
     } catch (error) {
       console.error('Error sending feedback:', error);
-      addMessage('❌ Error: Could not send feedback.😭😭😭😭😭😭😭😭😭😭', 'bot');
+      addMessage('❌ Error: Could not send feedback.', 'bot', 'error');
     }
-  };
-  const addMessage = (text, sender) => {
-    setMessages((prev) => [...prev, { text, sender }]);
   };
 
   return (
     <div className="App">
       <div className="chat-window">
         <h2 className="header">Mock Interview Chatbot</h2>
+
         <select value={role} onChange={(e) => setRole(e.target.value)} className="role-dropdown">
           <option value="Frontend Developer">Frontend Developer</option>
           <option value="Backend Developer">Backend Developer</option>
@@ -97,7 +99,7 @@ function App() {
 
         <ul className="messages-list">
           {messages.map((msg, i) => (
-            <li key={i} className={`message ${msg.sender}`}>
+            <li key={i} className={`message ${msg.sender} ${msg.type || ''}`}>
               {msg.text}
             </li>
           ))}
@@ -121,9 +123,7 @@ function App() {
           <button type="button" onClick={handleWrapUp} className="wrap-up-button red-button">
             Finish Interview
           </button>
-
         </div>
-
       </div>
     </div>
   );

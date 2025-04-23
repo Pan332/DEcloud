@@ -29,14 +29,14 @@
 }
 
 .header {
-  margin-top: -10px; /* ขยับหัวขึ้น */
-  margin-bottom: 12px; /* ลดระยะห่างด้านล่าง */
-  font-size: 24px; /* ปรับขนาดถ้าต้องการให้ดูเด่น */
-  text-align: center; /* จัดกึ่งกลางถ้ายังไม่ได้ทำ */
+  margin-top: -10px;
+  margin-bottom: 12px;
+  font-size: 24px;
+  text-align: center;
   color: #333;
 }
 
-
+/* Role dropdown */
 .role-dropdown {
   padding: 10px 16px;
   font-size: 15px;
@@ -49,19 +49,16 @@
   margin-bottom: 20px;
   cursor: pointer;
   transition: all 0.3s ease;
-  width: fit-content; /* หรือ 100% แล้วแต่ต้องการ */
+  width: fit-content;
 }
 
-/* Hover/Focus effect */
 .role-dropdown:hover,
 .role-dropdown:focus {
   border-color: #0077ff;
   box-shadow: 0 0 0 2px rgba(0, 119, 255, 0.2);
 }
 
-
-
-/* Chat messages list */
+/* Messages list */
 .messages-list {
   list-style: none;
   padding: 0;
@@ -73,7 +70,7 @@
   gap: 16px;
 }
 
-/* Individual message styling */
+/* Message base */
 .message {
   max-width: 80%;
   padding: 14px 20px;
@@ -85,7 +82,7 @@
   animation: fadeIn 0.4s forwards;
 }
 
-/* User's message style */
+/* User message */
 .message.user {
   background-color: #0077ff;
   color: white;
@@ -93,7 +90,7 @@
   border-radius: 24px 24px 4px 24px;
 }
 
-/* Bot's message style */
+/* Bot message */
 .message.bot {
   background-color: #ffffff;
   color: #333;
@@ -101,7 +98,7 @@
   border-radius: 24px 24px 24px 4px;
 }
 
-/* Error message style */
+/* Error message */
 .message.error {
   background-color: #ffeaea;
   color: #cc0000;
@@ -114,7 +111,20 @@
   box-shadow: 0 2px 6px rgba(255, 0, 0, 0.1);
 }
 
-/* Input area styling */
+/* Success message */
+.message.success {
+  background-color: #eaffea;
+  color: #007a00;
+  border-left: 4px solid #007a00;
+  align-self: center;
+  border-radius: 16px;
+  padding: 12px 18px;
+  max-width: 90%;
+  font-size: 14px;
+  box-shadow: 0 2px 6px rgba(0, 128, 0, 0.1);
+}
+
+/* Input area */
 .input-area {
   display: flex;
   margin-top: 20px;
@@ -122,11 +132,10 @@
   gap: 12px;
 }
 
-/* Input field */
 .input-area input {
   flex-grow: 1;
-  padding: 12px 18px;
-  font-size: 15px;
+  padding: 16px 20px;
+  font-size: 16px;
   border-radius: 25px;
   border: 1px solid #ccc;
   background-color: #f9f9f9;
@@ -139,7 +148,7 @@
   background-color: #fff;
 }
 
-/* Button style (send, finish, feedback) */
+/* Send and other buttons */
 .input-area button,
 .button {
   background-color: #0077ff;
@@ -158,62 +167,7 @@
   transform: translateY(-2px);
 }
 
-/* File upload section */
-.file-upload-area {
-  margin-top: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-}
-
-.file-upload-area input[type="file"] {
-  padding: 8px;
-  font-size: 14px;
-  border-radius: 20px;
-  border: 1px solid #ccc;
-}
-
-.file-upload-area button {
-  background-color: #5a7ef1;
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 25px;
-  cursor: pointer;
-  transition: background-color 0.3s, transform 0.2s;
-}
-
-.file-upload-area button:hover {
-  background-color: #4a6fd0;
-  transform: translateY(-2px);
-}
-
-/* Scrollbar style */
-.messages-list::-webkit-scrollbar {
-  width: 8px;
-}
-.messages-list::-webkit-scrollbar-thumb {
-  background-color: #0077ff;
-  border-radius: 5px;
-}
-.messages-list::-webkit-scrollbar-track {
-  background-color: #eaeaea;
-}
-
-/* ขยาย input field */
-.input-area input {
-  flex-grow: 1;
-  padding: 16px 20px;
-  font-size: 16px;
-  border-radius: 25px;
-  border: 1px solid #ccc;
-  background-color: #f9f9f9;
-  outline: none;
-  transition: border-color 0.3s, background-color 0.3s;
-}
-
-/* ปุ่มด้านล่าง */
+/* Bottom buttons (wrap-up, feedback) */
 .bottom-buttons {
   display: flex;
   justify-content: space-between;
@@ -221,7 +175,7 @@
   gap: 16px;
 }
 
-/* ปรับปุ่มสีแดง */
+/* Red buttons */
 .red-button {
   background-color: #cc0000;
   color: white;
@@ -237,7 +191,17 @@
   transform: translateY(-2px);
 }
 
-
+/* Scrollbar */
+.messages-list::-webkit-scrollbar {
+  width: 8px;
+}
+.messages-list::-webkit-scrollbar-thumb {
+  background-color: #0077ff;
+  border-radius: 5px;
+}
+.messages-list::-webkit-scrollbar-track {
+  background-color: #eaeaea;
+}
 
 /* Animations */
 @keyframes fadeIn {
