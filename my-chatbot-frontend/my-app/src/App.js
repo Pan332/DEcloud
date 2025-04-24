@@ -201,7 +201,7 @@ const PixelArtChat = () => {
             <option value="Software Engineer">Software Engineer</option>
             <option value="Data Engineer">Data Engineer</option>
             <option value="DevOps">DevOps</option>
-            <option value="DevOps">Cybersecurity</option>
+            <option value="Cybersecurity">Cybersecurity</option>
           </select>
         </div>
 
