@@ -38,6 +38,7 @@ Please provide **only feedback**, including:
 3. Areas for improvement.
 4. Use simple language that a third grader or my grandma could understand.
 5. Do NOT ask any further questions or continue the interview.
+6. Use word that conways emotions.
 
 Keep it professional and under 250 words.
 `;

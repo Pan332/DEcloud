@@ -7,6 +7,7 @@ import agentHappy from './assets/agent-happy.png';
 import agentConfused from './assets/agent-confused.png';
 import agentThinking from './assets/agent-thinking.png';
 import agentBad from './assets/agent-bad.png';
+import agentthankyou from './assets/agent-thankyou.png';
 
 const PixelArtChat = () => {
   const [messages, setMessages] = useState([ 
@@ -24,7 +25,8 @@ const PixelArtChat = () => {
     happy: agentHappy,
     confused: agentConfused,
     thinking: agentThinking,
-    bad: agentBad
+    bad: agentBad,
+    thankyou: agentthankyou
   };
 
   useEffect(() => {
@@ -156,7 +158,7 @@ const PixelArtChat = () => {
     if (isLoading) return;
 
     setIsLoading(true);
-    setAgentExpression('thinking');
+    setAgentExpression('thankyou');
 
     try {
       const response = await fetch('http://localhost:3002/api/feedback', {
