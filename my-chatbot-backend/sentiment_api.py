@@ -1,13 +1,9 @@
 from flask import Flask, request, jsonify
-from nltk.sentiment.vader import SentimentIntensityAnalyzer
-import nltk
 from flask_cors import CORS
+from textblob import TextBlob
 
 app = Flask(__name__)
 CORS(app)
-
-nltk.download('vader_lexicon')
-analyzer = SentimentIntensityAnalyzer()
 
 @app.route('/api/sentiment', methods=['POST'])
 def sentiment():
@@ -17,18 +13,21 @@ def sentiment():
         return jsonify({'error': 'Missing text field'}), 400
 
     text = data['text']
-    scores = analyzer.polarity_scores(text)
-    sentiment = 'neutral'
-    if scores['compound'] >= 0.05:
+    blob = TextBlob(text)
+    polarity = blob.sentiment.polarity
+
+    # Adjusted sentiment thresholds for TextBlob
+    if polarity > 0.25:
         sentiment = 'positive'
-    elif scores['compound'] <= -0.05:
+    elif polarity < 0:
         sentiment = 'negative'
+    else:
+        sentiment = 'neutral'
 
     return jsonify({
-        'scores': scores,
+        'polarity': polarity,
         'sentiment': sentiment
     }), 200
-
 
 if __name__ == '__main__':
     app.run(port=5001)
