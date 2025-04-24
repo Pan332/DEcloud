@@ -36,6 +36,7 @@ Wrap up the interview with:
 1. A brief summary of the candidate's performance.
 2. Key strengths and areas for improvement.
 3. A thank you note or encouragement.
+4. use simple word that even thrid grader and my grandma do understand
 
 Keep it professional and under 250 words.
 `;
