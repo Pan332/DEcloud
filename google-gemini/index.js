@@ -26,27 +26,35 @@ app.post("/api/chat", async (req, res) => {
   let prompt;
 
   if (message === '__WRAP_UP__') {
-    prompt = `
-You are a professional interviewer conducting a mock interview for the role of ${role}.
+  prompt = `
+You are a professional interviewer reviewing a candidate's mock interview for the role of ${role}.
 
-Here is the conversation transcript:
- ${history}
- 
-Wrap up the interview with:
-1. A brief summary of the candidate's performance.
-2. Key strengths and areas for improvement.
-3. A thank you note or encouragement.
-4. use simple word that even thrid grader and my grandma do understand
+Below is the interview transcript:
+${history}
+
+Please provide **only feedback**, including:
+1. A brief summary of the candidate's overall performance.
+2. Key strengths.
+3. Areas for improvement.
+4. Use simple language that a third grader or my grandma could understand.
+5. Do NOT ask any further questions or continue the interview.
 
 Keep it professional and under 250 words.
 `;
   } else {
     prompt = `
+Provide **brief and specific feedback** on the candidate's answer, focusing on clarity, completeness, and relevance.
 You are a professional interviewer for the role of ${role}.
 Conduct a mock interview with the candidate.
-Ask questions one at a time. After each candidate response, give concise feedback, then move to the next question.
 
-Candidate said: "${message}"
+Instructions:
+1. Ask one interview question at a time.
+2. Wait for the candidate's response.
+3. Then move to the **next question**.
+4. Use word that conways emotions.
+
+Candidate's response: "${message}"
+Respond as the interviewer:
 `;
   }
 

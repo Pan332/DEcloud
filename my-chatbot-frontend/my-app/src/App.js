@@ -61,6 +61,7 @@ const PixelArtChat = () => {
   
       const data = await response.json();
       const botResponse = data.response;
+      console.log('Sending to sentiment API:', { text: botResponse });
   
       const sentimentRes = await fetch('http://localhost:5001/api/sentiment', {
         method: 'POST',
@@ -75,7 +76,7 @@ const PixelArtChat = () => {
       }
   
       const sentimentData = await sentimentRes.json();
-  
+      console.log('Sending to sentiment API:', { text: sentimentData});
       if (sentimentData.sentiment === 'positive') {
         setAgentExpression('happy');
       } else if (sentimentData.sentiment === 'negative') {
@@ -111,9 +112,33 @@ const PixelArtChat = () => {
           role,
           history 
         }),
+        
       });
-
       const data = await response.json();
+      const botResponse = data.response;
+      console.log('Sending to sentiment API:', { text: botResponse });
+  
+      const sentimentRes = await fetch('http://localhost:5001/api/sentiment', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text: botResponse }),
+      });
+  
+      if (!sentimentRes.ok) {
+        const errorText = await sentimentRes.text();
+        console.error('Sentiment response error:', errorText);
+        throw new Error('Sentiment API error');
+      }
+  
+      const sentimentData = await sentimentRes.json();
+      console.log('Sending to sentiment API:', { text: sentimentData});
+      if (sentimentData.sentiment === 'positive') {
+        setAgentExpression('happy');
+      } else if (sentimentData.sentiment === 'negative') {
+        setAgentExpression('bad');
+      } else {
+        setAgentExpression('neutral');
+      }
       addMessage(data.response, 'bot');
     } catch (error) {
       console.error('Error:', error);
@@ -172,6 +197,9 @@ const PixelArtChat = () => {
             <option value="Data Scientist">Data Scientist</option>
             <option value="UX Designer">UX Designer</option>
             <option value="Software Engineer">Software Engineer</option>
+            <option value="Data Engineer">Data Engineer</option>
+            <option value="DevOps">DevOps</option>
+            <option value="DevOps">Cybersecurity</option>
           </select>
         </div>
 
