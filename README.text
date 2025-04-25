@@ -1,7 +1,6 @@
 How to get Start
 
-1. Run node index.js in my-chatbot-backend
-2. Run node index.js in google-gemini
-3. Run npm start in my-chatbot-frontend/my-app
-4. Run node connect.cjs in my-chatbot-backend
-5. Run Sentiment api in my-chatbot-backend
+1. Run node index.js in google-gemini
+2. Run npm start in my-chatbot-frontend/my-app
+3. Run node connect.cjs in my-chatbot-backend
+4. Run Sentiment api in my-chatbot-backend
